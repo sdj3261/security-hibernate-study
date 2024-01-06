@@ -2,6 +2,7 @@ package com.example.demo.security;
 
 import com.example.demo.DemoApplication;
 import com.example.demo.infra.UserDetailsDao;
+import com.example.demo.utils.AccessTokenGenerator;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.mock.mockito.SpyBean;
@@ -21,17 +22,22 @@ public abstract class ControllerTest {
     //뭐좀넣겠습니다.. before each spybean
     @SpyBean
     private AccessTokenService accessTokenService;
+    @SpyBean
+    private AccessTokenGenerator accessTokenGenerator;
     @MockBean
     protected UserDetailsDao userDetailsDao; // ← 여기로 가져온다.
 
+    protected String userAccessToken;
+
     @BeforeEach
-    void setUpUserDetailsDaoForAuthentication() { // ← 이 이름을 똑같이 쓰면 override된다는 점에 주의!
+    void setUpUserDetailsDaoForAuthentication() { //
+        userAccessToken = accessTokenGenerator.generate("UserID");
         UserDetails userDetails = User.withUsername("UserID")
-                .password("TOKEN")
+                .password(userAccessToken)
                 .authorities("ROLE_USER")
                 .build();
 
-        given(userDetailsDao.findByAccessToken("TOKEN"))
+        given(userDetailsDao.findByAccessToken(userAccessToken))
                 .willReturn(Optional.of(userDetails));
     }
 }

@@ -20,7 +20,7 @@ public class WelcomeControllerTest extends ControllerTest {
     @DisplayName("GET / - with correct Access Token")
     void homeWithAccessToken() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/")
-                        .header("Authorization", "Bearer TOKEN"))
+                        .header("Authorization", "Bearer " + userAccessToken))
                 .andExpect(status().isOk());
     }
 

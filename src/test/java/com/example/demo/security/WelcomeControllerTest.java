@@ -8,6 +8,8 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import java.util.List;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -39,4 +41,29 @@ public class WelcomeControllerTest extends ControllerTest {
                 .andExpect(status().isForbidden());
     }
 
+    @Test
+    @DisplayName("GET /admin - when the current user is ROLE_ADMIN")
+    void adminWithRoleAdmin() throws Exception {
+        mockMvc.perform(get("/admin")
+                        .header("Authorization", "Bearer " + adminAccessToken))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    @DisplayName("GET /admin - when the current user is ROLE_USER")
+    void adminWithRoleUser() throws Exception {
+        mockMvc.perform(get("/admin")
+                        .header("Authorization", "Bearer " + userAccessToken))
+                .andExpect(status().isForbidden());
+    }
+
+    @Test
+    @DisplayName("GET /user - when the current user is ROLE_USER or ROLE_ADMIN")
+    void userWithRoleUserOrAdmin() throws Exception {
+        for (var accessToken : List.of(userAccessToken, adminAccessToken)) {
+            mockMvc.perform(get("/user")
+                            .header("Authorization", "Bearer " + accessToken))
+                    .andExpect(status().isOk());
+        }
+    }
 }

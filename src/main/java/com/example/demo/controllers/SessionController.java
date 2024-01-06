@@ -31,9 +31,7 @@ public class SessionController {
     @DeleteMapping
     public String logout(Authentication authentication) {
         String accessToken = authentication.getCredentials().toString();
-
         logoutService.logout(accessToken);
-
         return "Logout";
     }
 

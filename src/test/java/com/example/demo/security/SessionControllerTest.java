@@ -2,18 +2,17 @@ package com.example.demo.security;
 
 import com.example.demo.controllers.LoginService;
 import com.example.demo.controllers.SessionController;
-import com.example.demo.infra.UserDetailsDao;
 import com.example.demo.utils.AccessTokenGenerator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Optional;
@@ -30,17 +29,18 @@ class SessionControllerTest extends ControllerTest {
 
     @SpyBean
     private LoginService loginService;
+    @SpyBean
+    private LogoutService logoutService;
     //
     @SpyBean
     private AccessTokenGenerator accessTokenGenerator;
-    //
-    @MockBean
-    private UserDetailsDao userDetailsDao;
+    @SpyBean
+    private PasswordEncoder passwordEncoder;
 
     @BeforeEach
     void setUp() {
         UserDetails userDetails = User.withUsername("UserID")
-                .password("password")
+                .password(passwordEncoder.encode("password"))
                 .authorities("ROLE_USER")
                 .build();
 

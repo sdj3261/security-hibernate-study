@@ -2,7 +2,8 @@ package com.example.demo.controllers;
 
 import com.example.demo.dto.LoginRequestDto;
 import com.example.demo.dto.LoginResultDto;
-import com.example.demo.security.LogoutService;
+import com.example.demo.service.LoginService;
+import com.example.demo.service.LogoutService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.BadCredentialsException;

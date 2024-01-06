@@ -1,4 +1,4 @@
-package com.example.demo.security;
+package com.example.demo.service;
 
 import com.example.demo.infra.UserDetailsDao;
 import org.springframework.stereotype.Service;

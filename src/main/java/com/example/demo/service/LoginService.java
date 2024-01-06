@@ -1,4 +1,4 @@
-package com.example.demo.controllers;
+package com.example.demo.service;
 
 import com.example.demo.infra.UserDetailsDao;
 import com.example.demo.utils.AccessTokenGenerator;

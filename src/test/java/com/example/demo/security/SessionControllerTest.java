@@ -1,7 +1,8 @@
 package com.example.demo.security;
 
-import com.example.demo.controllers.LoginService;
 import com.example.demo.controllers.SessionController;
+import com.example.demo.service.LoginService;
+import com.example.demo.service.LogoutService;
 import com.example.demo.utils.AccessTokenGenerator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

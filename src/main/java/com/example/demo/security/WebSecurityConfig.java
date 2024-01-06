@@ -29,6 +29,7 @@ public class WebSecurityConfig {
         //모든 HTTP요청에 인증이 필요할거야
         http.authorizeHttpRequests((auth) ->
                 auth.requestMatchers(HttpMethod.POST, "/session").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/users").permitAll()
                         .anyRequest().authenticated());
         return http.build();
     }
